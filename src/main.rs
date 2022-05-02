@@ -1,4 +1,4 @@
-use cicl::Terminal;
+use zender::Terminal;
 
 use std::env;
 use std::fs;
@@ -7,7 +7,7 @@ use std::process;
 fn main() {
     let ger: Vec<String> = env::args().collect();
 
-    let ctx = cicl::Terminal::new(&ger).unwrap_or_else(|_err| {
+    let ctx = Terminal::new(&ger).unwrap_or_else(|_err| {
         println!("Error: {}", _err);
         process::exit(1);
     });
@@ -15,18 +15,12 @@ fn main() {
     if ctx.flag == "help" {
         let h = help();
         println!("{}", h);
+    } else if ctx.flag == "get" {
+        let g = get(&ctx.text, &ctx.target);
+        println!("{}", g);
     } else if ctx.flag == "size" {
         let s = size(&ctx.target);
         println!("{}", s);
-    }
-    let counter = cicl::Terminal::new(&ger).unwrap_or_else(|err| {
-        println!("Couldn't parse arguments!");
-        process::exit(1);
-    });
-
-    if counter.flag == "get" {
-        let g = get(&counter.text, &counter.target);
-        println!("{}", g);
     }
 }
 
