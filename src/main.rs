@@ -2,6 +2,7 @@ use zender::Terminal;
 
 use std::env;
 use std::fs;
+use std::fs::File;
 use std::process;
 
 fn main() {
@@ -49,6 +50,8 @@ fn get(s0: &str, s1: &str) -> usize {
     v.len()
 }
 
-fn size(_s: &str) -> f64 {
-    7.0
+fn size(s: &str) -> usize {
+    let file = File::open(s);
+    let size = file.metadata();
+
 }
