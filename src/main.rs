@@ -52,6 +52,7 @@ fn get(s0: &str, s1: &str) -> usize {
 
 fn size(s: &str) -> usize {
     let file = File::open(s);
-    let size = file.metadata();
+    let size = file.metadata().len();
 
+    size as usize
 }
