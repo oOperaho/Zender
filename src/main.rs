@@ -20,7 +20,7 @@ fn main() {
         println!("{}", g);
     } else if ctx.flag == "size" {
         let s = size(&ctx.target);
-        println!("{:?}", s);
+        println!("Size of '{}': {:?} bytes.", ctx.target, s);
     }
 }
 
