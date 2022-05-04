@@ -33,7 +33,7 @@ fn help() -> String {
                 help: Displays this message, of course
                 get: Will search a word/text on a file for you
                     syntax: zender get my_word my_file.txt
-                szof: Will show you the size of the file")
+                size: Will show you the size of the file")
 }
 
 fn get(s0: &str, s1: &str) -> usize {
