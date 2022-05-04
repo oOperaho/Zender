@@ -1,9 +1,8 @@
 use zender::Terminal;
 
-use std::env;
-use std::fs;
+use std::{self, env, fs, process};
 use std::fs::File;
-use std::process;
+use std::io::Error;
 
 fn main() {
     let ger: Vec<String> = env::args().collect();
@@ -21,7 +20,7 @@ fn main() {
         println!("{}", g);
     } else if ctx.flag == "size" {
         let s = size(&ctx.target);
-        println!("{}", s);
+        println!("{:?}", s);
     }
 }
 
@@ -50,9 +49,9 @@ fn get(s0: &str, s1: &str) -> usize {
     v.len()
 }
 
-fn size(s: &str) -> usize {
-    let mut file = File::open(s);
-    let size = file.metadata().unwrap().len();
+fn size(s: &str) -> Result<(), Error> {
+    let file = File::open(s)?;
+    let size = file.metadata()?;
 
-    size as usize
+    Ok(())
 }
