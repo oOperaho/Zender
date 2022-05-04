@@ -49,9 +49,10 @@ fn get(s0: &str, s1: &str) -> usize {
     v.len()
 }
 
-fn size(s: &str) -> Result<(), Error> {
+fn size(s: &str) -> Result<u64, Error> {
     let file = File::open(s)?;
-    let size = file.metadata()?;
+    file.sync_all()?;
+    let size = file.metadata()?.len();
 
-    Ok(())
+    Ok(size)
 }
