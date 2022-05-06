@@ -19,7 +19,7 @@ fn main() {
         let g = get(&ctx.text, &ctx.target);
         println!("{}", g);
     } else if ctx.flag == "size" {
-        let s = size(&ctx.target);
+        let s = size(&ctx.target).unwrap();
         println!("Size of '{}': {:?} bytes.", ctx.target, s);
     }
 }
@@ -52,7 +52,7 @@ fn get(s0: &str, s1: &str) -> usize {
 fn size(s: &str) -> Result<u64, Error> {
     let file = File::open(s)?;
     file.sync_all()?;
-    let size = file.metadata()?.len();
+    let size = file.metadata()?;
 
-    Ok(size)
+    Ok(size.len())
 }
