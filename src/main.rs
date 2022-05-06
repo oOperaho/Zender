@@ -19,7 +19,10 @@ fn main() {
         let g = get(&ctx.text, &ctx.target);
         println!("{}", g);
     } else if ctx.flag == "size" {
-        let s = size(&ctx.target).unwrap();
+        let s = size(&ctx.target).unwrap_or_else(|err| {
+            println!("Error: {}", err);
+            process::exit(1)
+        });
         println!("Size of '{}': {:?} bytes.", ctx.target, s);
     }
 }
