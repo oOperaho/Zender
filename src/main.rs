@@ -7,8 +7,8 @@ use std::io::Error;
 fn main() {
     let ger: Vec<String> = env::args().collect();
 
-    let ctx = Terminal::new(&ger).unwrap_or_else(|_err| {
-        println!("Error: {}", _err);
+    let ctx = Terminal::new(&ger).unwrap_or_else(|err| {
+        println!("Error: {}", err);
         process::exit(1);
     });
 
@@ -16,14 +16,23 @@ fn main() {
         let h = help();
         println!("{}", h);
     } else if ctx.flag == "get" {
-        let g = get(&ctx.text, &ctx.target);
-        println!("{}", g);
+        let g = get(&ctx.text, &ctx.target).unwrap_or_else(|err| {
+            println!("Error: {}", err);
+            process::exit(1);
+        });
+        println!("{:?}", g);
     } else if ctx.flag == "size" {
         let s = size(&ctx.target).unwrap_or_else(|err| {
             println!("Error: {}", err);
             process::exit(1)
         });
-        println!("Size of '{}': {:?} bytes.", ctx.target, s);
+        if s <= 1000 {
+            println!("Size of '{}': {:?} bytes.", ctx.target, s);
+        } else if s <= 1000000 {
+            let res = s / 1000000;
+            println!("Size of '{}': {:?}kb.", ctx.target, res);
+        }
+        
     }
 }
 
@@ -39,8 +48,8 @@ fn help() -> String {
                 size: Will show you the size of the file")
 }
 
-fn get(s0: &str, s1: &str) -> usize {
-    let file = fs::read_to_string(s1).expect("Could not read the file!");
+fn get(s0: &str, s1: &str) -> Result<usize, Error> {
+    let file = fs::read_to_string(s1)?;
     let mut v = Vec::new();
 
     for occ in file.lines() {
@@ -49,7 +58,7 @@ fn get(s0: &str, s1: &str) -> usize {
         }
     }
 
-    v.len()
+    Ok(v.len())
 }
 
 fn size(s: &str) -> Result<u64, Error> {
