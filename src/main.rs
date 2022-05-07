@@ -27,10 +27,11 @@ fn main() {
             process::exit(1)
         });
         if s <= 1000 {
-            println!("Size of '{}': {:?} bytes.", ctx.target, s);
+            println!("Size of '{}': {} bytes.", ctx.target, s);
         } else if s <= 1000000 {
-            let res = s / 1000000;
-            println!("Size of '{}': {:?}kb.", ctx.target, res);
+            let n = format!("{num}", num=s);
+            let res = &n[0..2];
+            println!("Size of '{}': {}kb.", ctx.target, res);
         }
         
     }
