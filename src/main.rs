@@ -30,8 +30,14 @@ fn main() {
             println!("Size of '{}': {} bytes.", ctx.target, s);
         } else if s <= 1000000 {
             let n = format!("{num}", num=s);
-            let res = &n[0..2];
-            println!("Size of '{}': {}kb.", ctx.target, res);
+            let a1 = &n[0..1];
+            let a2 = &n[1..2];
+            println!("Size of '{}': {}.{}kb ({} bytes).", ctx.target, a1, a2, s);
+        } else if s <= 1000000000 {
+            let n = format!("{num}", num=s);
+            let a1 = &n[0..1];
+            let a2 = &n[1..2];
+            println!("Size of '{}': {}.{}mb ({} bytes).", ctx.target, a1, a2, s);
         }
         
     }
