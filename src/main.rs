@@ -30,19 +30,23 @@ fn main() {
             println!("Size of '{}': {} bytes.", ctx.target, s);
         } else if s <= 1000000 {
             let n = format!("{num}", num=s);
-            let a1 = &n[0..1];
-            let a2 = &n[1..2];
-            println!("Size of '{}': {}.{}kb ({} bytes).", ctx.target, a1, a2, s);
+            let res = two_nums(&n);
+            println!("Size of '{}': {}.{}kb ({} bytes).", ctx.target, res[0], res[1], s);
         } else if s <= 1000000000 {
             let n = format!("{num}", num=s);
-            let a1 = &n[0..1];
-            let a2 = &n[1..2];
-            println!("Size of '{}': {}.{}mb ({} bytes).", ctx.target, a1, a2, s);
+            let res = two_nums(&n);
+            println!("Size of '{}': {}.{}mb ({} bytes).", ctx.target, res[0], res[1], s);
+        } else if s <= 1000000000000 {
+            let n = format!("{num}", num=s);
+            let res = two_nums(&n);
+            println!("Size of '{}': {}.{}gb ({} bytes).", ctx.target, res[0], res[1], s);
+        } else {
+            println!("Well, this file is really gigantic: {} bytes.", s);
         }
-        
     }
 }
 
+// Here, there are the definitions of each command that Zender can do
 fn help() -> String {
     String::from("WELCOME TO ZENDER
                 The pattern is: zender -flag- -file-
@@ -74,4 +78,14 @@ fn size(s: &str) -> Result<u64, Error> {
     let size = file.metadata()?;
 
     Ok(size.len())
+}
+
+// Now these are function to make the code more clean
+fn two_nums(s: &str) -> Vec<&str> {
+    let mut v = Vec::new();
+    let a1 = &s[0..1];
+    let a2 = &s[1..2];
+    v.push(a1);
+    v.push(a2);
+    v
 }
