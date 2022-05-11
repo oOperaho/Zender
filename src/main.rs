@@ -49,7 +49,7 @@ fn main() {
             println!("Error: {}", err);
             process::exit(1)
         });
-        println!("This file was created in {}", d);
+        println!("This file was created in {:?}", d);
     }
 }
 
