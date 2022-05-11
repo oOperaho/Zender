@@ -43,6 +43,11 @@ fn main() {
         } else {
             println!("Well, this file is really gigantic: {} bytes.", s);
         }
+    } else if ctx.flag == "date" {
+        let d = date(&ctx.target).unwrap_or_else(|err| {
+            println!("Error: {}", err);
+            process::exit(1)
+        });
     }
 }
 
@@ -78,6 +83,14 @@ fn size(s: &str) -> Result<u64, Error> {
     let size = file.metadata()?;
 
     Ok(size.len())
+}
+
+fn date(s: &str) -> Result<u64, Error> {
+    let file = File::open(s)?;
+    file.sync_all()?;
+    let date = file.metadata()?;
+
+    Ok(date.created())
 }
 
 // Now these are functions to make the code more clean
