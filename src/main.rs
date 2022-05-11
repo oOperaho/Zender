@@ -80,7 +80,7 @@ fn size(s: &str) -> Result<u64, Error> {
     Ok(size.len())
 }
 
-// Now these are function to make the code more clean
+// Now these are functions to make the code more clean
 fn two_nums(s: &str) -> Vec<&str> {
     let mut v = Vec::new();
     let a1 = &s[0..1];
