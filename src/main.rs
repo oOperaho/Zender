@@ -92,7 +92,7 @@ fn date(s: &str) -> Result<SystemTime, Error> {
     file.sync_all()?;
     let date = file.metadata()?;
 
-    Ok(date.created())
+    date.created()
 }
 
 // Now these are functions to make the code more clean
