@@ -3,6 +3,7 @@ use zender::Terminal;
 use std::{self, env, fs, process};
 use std::fs::File;
 use std::io::Error;
+use std::time::SystemTime;
 
 fn main() {
     let ger: Vec<String> = env::args().collect();
@@ -48,6 +49,7 @@ fn main() {
             println!("Error: {}", err);
             process::exit(1)
         });
+        println!("This file was created in {}", d);
     }
 }
 
@@ -85,7 +87,7 @@ fn size(s: &str) -> Result<u64, Error> {
     Ok(size.len())
 }
 
-fn date(s: &str) -> Result<u64, Error> {
+fn date(s: &str) -> Result<SystemTime, Error> {
     let file = File::open(s)?;
     file.sync_all()?;
     let date = file.metadata()?;
