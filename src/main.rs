@@ -1,7 +1,7 @@
 use zender::Terminal;
 
 use std::{self, env, fs, process};
-use std::fs::File;
+use std::fs::{File, FileType};
 use std::io::Error;
 use std::time::SystemTime;
 
@@ -50,6 +50,12 @@ fn main() {
             process::exit(1)
         });
         println!("This file was created in {:?}", d);
+    } else if ctx.flag == "ftype" {
+        let f = ftype(&ctx.target).unwrap_or_else(|err| {
+            println!("Error: {}", err);
+            process::exit(1)
+        });
+        println!("This file has type {:?}", f);
     }
 }
 
@@ -63,7 +69,8 @@ fn help() -> String {
                 help: Displays this message, of course
                 get: Will search a word/text on a file for you
                     syntax: zender get my_word my_file.txt
-                size: Will show you the size of the file")
+                size: Will show you the size of the file
+                ")
 }
 
 fn get(s0: &str, s1: &str) -> Result<usize, Error> {
@@ -95,12 +102,12 @@ fn date(s: &str) -> Result<SystemTime, Error> {
     date.created()
 }
 
-fn ftype(s: &str) -> Result<str, Error> {
+fn ftype(s: &str) -> Result<FileType, Error> {
     let file = File::open(s)?;
     file.sync_all()?;
     let ftype = file.metadata()?;
 
-    ftype.file_type();
+    Ok(ftype.file_type())
 }
 
 // Now these are functions to make the code more clean
