@@ -96,7 +96,11 @@ fn date(s: &str) -> Result<SystemTime, Error> {
 }
 
 fn ftype(s: &str) -> Result<str, Error> {
-    // snip
+    let file = File::open(s)?;
+    file.sync_all()?;
+    let ftype = file.metadata()?;
+
+    ftype.file_type();
 }
 
 // Now these are functions to make the code more clean
