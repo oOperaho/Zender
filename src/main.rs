@@ -70,7 +70,8 @@ fn help() -> String {
                 get: Will search a word/text on a file for you
                     syntax: zender get my_word my_file.txt
                 size: Will show you the size of the file
-                ")
+                date: Displays the file's date of creation
+                ftype: Shows the type of the specified file")
 }
 
 fn get(s0: &str, s1: &str) -> Result<usize, Error> {
