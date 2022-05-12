@@ -95,6 +95,10 @@ fn date(s: &str) -> Result<SystemTime, Error> {
     date.created()
 }
 
+fn ftype(s: &str) -> Result<str, Error> {
+    // snip
+}
+
 // Now these are functions to make the code more clean
 fn two_nums(s: &str) -> Vec<&str> {
     let mut v = Vec::new();
