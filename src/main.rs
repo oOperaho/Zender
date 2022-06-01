@@ -19,7 +19,7 @@ fn main() {
     } else if ctx.flag == "get" {
         let g = get(&ctx.text, &ctx.target).unwrap_or_else(|err| {
             println!("Error: {}", err);
-            process::exit(1);
+            process::exit(1)
         });
         println!("{:?}", g);
     } else if ctx.flag == "size" {
@@ -64,7 +64,7 @@ fn main() {
         println!("Content of {}:\n{}", &ctx.target, s);
     } else if ctx.flag == "put" {
         let p = put(&ctx.text, &ctx.target).unwrap_or_else(|err| {
-            println!("{}",. err);
+            println!("{}", err);
             process::exit(1)
         });
         println!("Done. Run 'zender see' to check the results.");
@@ -82,6 +82,7 @@ fn help() -> String {
                 get: Will search a word/text on a file for you
                     syntax: zender get my_word my_file.txt
                 see: It prints the file's content
+                put: Will write somethint to a file
                 size: Will show you the size of the file
                 date: Displays the file's date of creation
                 ftype: Shows the type of the specified file")
@@ -104,6 +105,10 @@ fn see(s: &str) -> Result<String, Error> {
     let file = fs::read_to_string(s)?;
 
     Ok(file)
+}
+
+fn put(s0: &str, s1: &str) {
+    let file = fs::write(s0, s1);
 }
 
 fn size(s: &str) -> Result<u64, Error> {
