@@ -62,6 +62,12 @@ fn main() {
             process::exit(1)
         });
         println!("Content of {}:\n{}", &ctx.target, s);
+    } else if ctx.flag == "put" {
+        let p = put(&ctx.text, &ctx.target).unwrap_or_else(|err| {
+            println!("{}",. err);
+            process::exit(1)
+        });
+        println!("Done. Run 'zender see' to check the results.");
     }
 }
 
