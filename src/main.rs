@@ -75,6 +75,7 @@ fn help() -> String {
                 help: Displays this message, of course
                 get: Will search a word/text on a file for you
                     syntax: zender get my_word my_file.txt
+                see: It prints the file's content
                 size: Will show you the size of the file
                 date: Displays the file's date of creation
                 ftype: Shows the type of the specified file")
