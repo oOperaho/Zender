@@ -56,6 +56,12 @@ fn main() {
             process::exit(1)
         });
         println!("This file has type {:?}", f);
+    } else if ctx.flag == "see" {
+        let s = see(&ctx.target).unwrap_or_else(|err| {
+            println!("{}", err);
+            process::exit(1)
+        });
+        println!("Content of {}:\n{}", &ctx.target, s);
     }
 }
 
@@ -85,6 +91,12 @@ fn get(s0: &str, s1: &str) -> Result<usize, Error> {
     }
 
     Ok(v.len())
+}
+
+fn see(s: &str) -> Result<String, Error> {
+    let file = fs::read_to_string(s)?;
+
+    Ok(file)
 }
 
 fn size(s: &str) -> Result<u64, Error> {
