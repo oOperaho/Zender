@@ -58,12 +58,12 @@ fn main() {
         println!("This file has type {:?}", f);
     } else if ctx.flag == "see" {
         let s = see(&ctx.target).unwrap_or_else(|err| {
-            println!("{}", err);
+            println!("Error: {}", err);
             process::exit(1)
         });
         println!("Content of {}:\n{}", &ctx.target, s);
     } else if ctx.flag == "put" {
-        let p = put(&ctx.text, &ctx.target).unwrap_or_else(|err| {
+        put(&ctx.text, &ctx.target).unwrap_or_else(|err| {
             println!("{}", err);
             process::exit(1)
         });
@@ -107,8 +107,10 @@ fn see(s: &str) -> Result<String, Error> {
     Ok(file)
 }
 
-fn put(s0: &str, s1: &str) {
-    let file = fs::write(s0, s1);
+fn put(s0: &str, s1: &str) -> Result<(), Error> {
+    fs::write(s0, s1)?;
+
+    Ok(())
 }
 
 fn size(s: &str) -> Result<u64, Error> {
